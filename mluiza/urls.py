@@ -1,16 +1,11 @@
 from django.conf.urls import patterns, include, url
+from rest_framework import routers
+from person import views
 
-from django.contrib import admin
-admin.autodiscover()
+router = routers.DefaultRouter()
+router.register(r'person', views.FacebookUserViewSet)
 
-from person.api import FacebookUserResource
-
-facebook_user_resource = FacebookUserResource()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'mluiza.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
-    (r'', include(facebook_user_resource.urls)),
+    url(r'^', include(router.urls)),
 )
