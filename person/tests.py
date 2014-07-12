@@ -36,3 +36,6 @@ class FacebookUserTests(APITestCase):
 
         response = self.client.get('/person/?limit=2')
         self.assertEqual(len(response.data), 2)
+
+        response = self.client.get('/person/')
+        self.assertEqual(len(response.data), 2)

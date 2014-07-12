@@ -21,10 +21,12 @@ class FacebookUserViewSet(viewsets.ModelViewSet):
         Overriding default list in order to parse
         the url param limit and thus limit the results
         '''
-
-        limit = request.QUERY_PARAMS['limit'][0]
-
-        self.object_list = self.filter_queryset(self.get_queryset())[:limit]
+        
+        if 'limit' in request.QUERY_PARAMS.keys():
+            limit = request.QUERY_PARAMS['limit'][0]
+            self.object_list = self.filter_queryset(self.get_queryset())[:limit]
+        else:
+            self.object_list = self.filter_queryset(self.get_queryset())
 
         serializer = self.get_serializer(self.object_list, many=True)
 
