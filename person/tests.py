@@ -28,6 +28,9 @@ class FacebookUserTests(APITestCase):
         self.client.post('/person/', {'facebookId': '1229015237'}, format='json')
         self.client.post('/person/', {'facebookId': '41'}, format='json')
 
+        response = self.client.get('/person/?limit=0')
+        self.assertEqual(len(response.data), 0)
+
         response = self.client.get('/person/?limit=1')
         self.assertEqual(len(response.data), 1)
 
