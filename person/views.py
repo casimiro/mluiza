@@ -3,12 +3,10 @@ from rest_framework import viewsets
 from person.serializers import FacebookUserSerializer
 from rest_framework.response import Response
 
-# Create your views here.
+import logging
+logger = logging.getLogger(__name__)
 
 class FacebookUserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = FacebookUser.objects.all()
     serializer_class = FacebookUserSerializer
 
@@ -17,6 +15,11 @@ class FacebookUserViewSet(viewsets.ModelViewSet):
         users = FacebookUser.objects.all()
         return Response(users)
 
+    def initial(self, request, *args, **kwargs):
+        data = request.DATA
+        logger.debug("[{0}] {1} {2} {3}".format(self.__class__.__name__, request.method, request.path, data))
+
+        super(FacebookUserViewSet, self).initial(request, args, kwargs)
 
     def list(self, request, *args, **kwargs):
         '''
